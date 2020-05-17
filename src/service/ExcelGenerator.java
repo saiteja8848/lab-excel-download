@@ -1,10 +1,10 @@
 package service;
-/*
+
 import java.io.FileOutputStream;
 import java.io.IOException;
-
 import java.util.List;
 
+import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -19,29 +19,50 @@ import model.Prograd;
 public class ExcelGenerator {
 	
 	FileOutputStream out;
+
+	
 	public HSSFWorkbook excelGenerate(Prograd prograd, List<Prograd> list) throws IOException {
+		
+		HSSFWorkbook workbook=null;
+		FileOutputStream out=null;
+		HSSFSheet worksheet;
+		HSSFRow rows; 
 		try {
-
-
+			String filename="prograd.xls";
 			
-			// Type your code here
+			workbook = new HSSFWorkbook();	
+			worksheet =workbook.createSheet();
 			
-		
+			for (int r=0;r < list.size(); r++ )
+			{
+				HSSFRow row = worksheet.createRow(r);
+				for (int c=0;c < 5; c++ )
+				{
+					HSSFCell cell = row.createCell(c);		
+					
+					if(c==0)
+					cell.setCellValue(list.get(r).getName());
+					else if(c==1)
+					cell.setCellValue(list.get(r).getId());
+					else if(c==2)
+					cell.setCellValue(list.get(r).getRate());
+					else if(c==3)
+					cell.setCellValue(list.get(r).getComment());
+					else
+						if(c==4)
+					cell.setCellValue(list.get(r).getRecommend());
+				}
 			}
-			// Do not modify the lines given below
-			 out = new FileOutputStream(filename);
-			hwb.write(out);
-		
-			return hwb;
-			}
-		catch (Exception e) {
-				e.printStackTrace();
-			}
-		finally {
-			out.close();
+			
+			out = new FileOutputStream(filename);
+			workbook.write(out);	
 		}
-		return null;
+			catch (Exception e) {e.printStackTrace();}
+		finally {
+			out.close();}
 		
+			 
+		return workbook;		
 	}
+
 }
-*/
